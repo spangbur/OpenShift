@@ -2,7 +2,9 @@
 The Installation below is based off of OpenShift 4.19.7. An Agent-based installation was chosen to quickly intergrate NVIDIA GPU's and external Dell PowerScale storage for PV creation
 
 ## HAProxy & Keepalived
-###HAProxy-01 Example Configuration
+
+### HAProxy-01 Example Configuration
+
 ```
 #---------------------------------------------------------------------
 # Example configuration for a possible web application.  See the
@@ -128,7 +130,8 @@ backend insecure
    server work-01 10.151.87.23:80 check
    server work-02 10.151.87.24:80 check
 ```
-HAProxy-01 Keepalived Example Configuration
+
+### HAProxy-01 Keepalived Example Configuration
 
 ```
 # Global definitions for the keepalived instance
@@ -167,7 +170,7 @@ vrrp_instance VI_OS_API {
 }
 ```
 
-###HAProxy-02 Example Configuration
+### HAProxy-02 Example Configuration
 
 ```
 #---------------------------------------------------------------------
@@ -288,7 +291,7 @@ backend insecure
     server work-01 10.151.87.23:80 check
     server work-02 10.151.87.24:80 check
 ```
-HAProxy-02 Keepalivd Example Configuration
+### HAProxy-02 Keepalivd Example Configuration
 
 ```
 # Global definitions for the keepalived instance

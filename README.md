@@ -132,7 +132,7 @@ hosts:
             next-hop-address: 10.151.87.1
             next-hop-interface: ens32
 ```
-# Install-config Example
+# Install-config.yaml Example
 ```
 apiVersion: v1
 baseDomain: sterling.xyz

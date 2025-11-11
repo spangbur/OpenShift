@@ -133,5 +133,29 @@ hosts:
             next-hop-interface: ens32
 ```
 # Install-config Example
-
+```
+apiVersion: v1
+baseDomain: sterling.xyz
+metadata:
+  name: workcluster
+compute:
+  - name: worker
+    replicas: 2
+controlPlane:
+  name: master
+  replicas: 3
+networking:
+  networkType: OVNKubernetes
+  machineNetwork:
+    - cidr: 10.151.87.0/24
+platform:
+  baremetal:
+    apiVIPs: 
+      - 10.151.87.99
+    ingressVIPs: 
+      - 10.151.87.100
+pullSecret: 'your secret goes here"}}}'
+sshKey: |
+  your ssh key goes here
+```
    

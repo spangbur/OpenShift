@@ -1,4 +1,5 @@
 # OpenShift Agent-based installation
+The Installation below is based off of OpenShift 4.19.7. An Agent-based installation was chosen to quickly intergrate NVIDIA GPU's and external Dell PowerScale storage for PV creation
 # HAProxy & Keepalived
 #HAProxy-01 Example Configuration
 ```

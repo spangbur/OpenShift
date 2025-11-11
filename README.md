@@ -485,7 +485,6 @@ platform:
     ingressVIPs: 
       - 10.151.87.100
 pullSecret: 'your secret goes here"}}}'
-sshKey: |
-  your ssh key goes here
+sshKey: 'your ssh key goes here'
 ```
    

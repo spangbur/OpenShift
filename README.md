@@ -329,7 +329,7 @@ vrrp_instance VI_OS_API {
     }
 }
 ```
-# Agent-config.yaml Example
+## Agent-config.yaml Example
 ```
 apiVersion: v1alpha1
 kind: AgentConfig
@@ -462,7 +462,7 @@ hosts:
             next-hop-address: 10.151.87.1
             next-hop-interface: ens32
 ```
-# Install-config.yaml Example
+## Install-config.yaml Example
 ```
 apiVersion: v1
 baseDomain: sterling.xyz

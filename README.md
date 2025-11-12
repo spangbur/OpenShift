@@ -508,7 +508,7 @@ sshKey: 'your ssh public key here'
 
 ## Create Agent ISO
 
-The Agent ISO can be created on Windows, MacOS, or Linux. I've chosen Ubuntu as the platform for illustration purposes. Use the following URL to identify and download the specific version of tools required for your installation:
+The Agent ISO can be created on Windows, MacOS, or Linux. I've chosen RHEL Developer version which is free for illustration purposes. I chose RHEL because getting NMState installed is more straight forward than using other distro's. Use the following URL to identify and download the specific version of OpenShift tools required for your installation:
 
 https://mirror.openshift.com/pub/openshift-v4/clients/ocp/
 
@@ -517,30 +517,29 @@ openshift-client-linux-4.19.17.tar.gz<br />
 openshift-install-linux-4.19.17.tar.gz
 
 ```
-
+cd  /home/sterling/Downloads
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-client-linux-4.19.17.tar.gz
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-install-linux-4.19.17.tar.gz
 
-cd /home/sterling
-
-tar -xvzf /home/sterling/openshift-client-linux-4.19.17.tar.gz
-tar -xvzf /home/sterling/openshift-install-linux-4.19.17.tar.gz
+tar -xvzf /home/sterling/Downloads/openshift-client-linux-4.19.17.tar.gz
+tar -xvzf /home/sterling/Downloads/openshift-install-linux-4.19.17.tar.gz
 
 sudo mv /home/sterling/Downloads/oc kubectl openshift-install /usr/sbin
 
-sudo mkdir /home/sterling/install
-sudo mkdir /home/sterling/install/original
+mkdir /home/sterling/install
+mkdir /home/sterling/install/original
 
 sudo touch /home/sterling/install/original/agent-config.yaml
 sudo touch /home/sterling/install/original/install-config.yaml
 
-sudo chown -R sterling:sterling /home/sterling/install
 ```
 
 Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /home/sterling/install/original directory
 
 ```
 cp /home/sterling/install/original/*.* /home/sterling/install
+
+sudo dnf install nmstate -y
 ```
 Make the necessary adjustments to the example files that align with the environment 
 

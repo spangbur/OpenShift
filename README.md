@@ -531,6 +531,7 @@ mkdir /home/sterling/install/original
 
 sudo touch /home/sterling/install/original/agent-config.yaml
 sudo touch /home/sterling/install/original/install-config.yaml
+chmod 777 /home/sterling/install/original/agent-config.yaml install-config.yaml
 
 ```
 

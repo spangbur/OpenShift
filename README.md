@@ -505,4 +505,25 @@ platform:
 pullSecret: 'your pull secret here'
 sshKey: 'your ssh public key here'
 ```
-   
+
+## Create Agent ISO
+
+```
+mkdir install
+mkdir /install/original
+
+touch /install/original/agent-config.yaml
+touch /install/original/install-config.yaml
+```
+
+Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /install/original directory
+
+```
+cp /install/original/*.* /install
+```
+Make the necessary adjustments to the example files that align with the environment 
+
+from the /install directory execute the following command to generate the agent iso
+```
+open-shift-install --dir=/install agent create image
+```

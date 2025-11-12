@@ -529,18 +529,19 @@ sudo mv /usr/sterling/Downloads/oc kubectl openshift-install /usr/sbin
 mkdir install
 mkdir /install/original
 
-touch /install/original/agent-config.yaml
-touch /install/original/install-config.yaml
+touch /usr/sterling/install/original/agent-config.yaml
+touch usr/sterling/install/original/install-config.yaml
 ```
 
 Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /install/original directory
 
 ```
-cp /install/original/*.* /install
+cp /usr/sterling/install/original/*.* /install
 ```
 Make the necessary adjustments to the example files that align with the environment 
 
-from the /install directory execute the following command to generate the agent iso
+from the /usr/sterling/install directory execute the following command to generate the agent iso<br />
+***CAUTION***
 ```
-openshift-install --dir=/install agent create image
+openshift-install --dir=/usr/sterling/install agent create image
 ```

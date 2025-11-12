@@ -560,9 +560,12 @@ As the servers boot they will identify which server holds the rendezvous IP and 
 
 ## Monitor OpenShift Installtion<br />
 
+Run the command below while in the /home/sterling/install directory to monitor the bootstrap process. It is expected to see connection refused and timeout errors during the initial installation. You have to provide time for the OS and OpenShift to be installed on all machines
 ```
 openshift-install wait-for bootstrap-complete --dir=/home/sterling/install --log-level debug
 ```
+
+
 Monitor the installtion from the machine which was used to create the Agent ISO. Login or ssh into the machine and navigate to the /usr/sterling/install directory. You can monitor diffrent point of the installation process or installation as a whole.<br />
 The openshift-install wait-for command is a crucial part of the OpenShift Container Platform installation process, particularly when using the openshift-install utility. Its primary function is to monitor and wait for specific stages of the OpenShift cluster<br /> installation to reach a complete and stable state.<br />
 

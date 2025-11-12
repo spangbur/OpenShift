@@ -540,6 +540,7 @@ Copy the contents of the example agent-config.yaml and install-config.yaml to th
 cp /home/sterling/install/original/*.* /home/sterling/install
 
 sudo dnf install nmstate -y
+sudo systemctl stop firewalld
 ```
 Make the necessary adjustments to the example files that align with the environment 
 

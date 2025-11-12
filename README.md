@@ -521,16 +521,16 @@ openshift-install-linux-4.19.17.tar.gz
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-client-linux-4.19.17.tar.gz
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-install-linux-4.19.17.tar.gz
 
-tar -xvzf /usr/sterling/Downloads/openshift-client-linux-4.19.17.tar.gz
-tar -xvzf /usr/sterling/Downloads/openshift-install-linux-4.19.17.tar.gz
+tar -xvzf /home/sterling/Downloads/openshift-client-linux-4.19.17.tar.gz
+tar -xvzf /home/sterling/Downloads/openshift-install-linux-4.19.17.tar.gz
 
-sudo mv /usr/sterling/Downloads/oc kubectl openshift-install /usr/sbin
+sudo mv /home/sterling/Downloads/oc kubectl openshift-install /usr/sbin
 
-mkdir install
-mkdir /install/original
+mkdir /home/install
+mkdir /home/install/original
 
-touch /usr/sterling/install/original/agent-config.yaml
-touch usr/sterling/install/original/install-config.yaml
+touch /home/sterling/install/original/agent-config.yaml
+touch /home/sterling/install/original/install-config.yaml
 ```
 
 Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /install/original directory
@@ -540,7 +540,7 @@ cp /usr/sterling/install/original/*.* /install
 ```
 Make the necessary adjustments to the example files that align with the environment 
 
-from the /usr/sterling/install directory execute the following command to generate the agent iso<br />
+from the /home/sterling/install directory execute the following command to generate the agent iso<br />
 
 ***CAUTION***<br />
 When you generate the ISO with the command below, the agent-config.yaml and the install-config.yaml are automatically deleted from the /usr/sterling/install directory as part of the agent iso creation. Please ensure that you have back up these files prior to running the command below.

@@ -508,7 +508,24 @@ sshKey: 'your ssh public key here'
 
 ## Create Agent ISO
 
+The Agent ISO can be created on Windows, MacOS, or Linux. I've chosen Ubuntu as the platform for illustration purposes. Use the following URL to identify and download the specific version of tools required for your installation:
+
+https://mirror.openshift.com/pub/openshift-v4/clients/ocp/
+
+Requirements:
+openshift-client-linux-4.19.17.tar.gz
+openshift-install-linux-4.19.17.tar.gz
+
 ```
+
+curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-client-linux-4.19.17.tar.gz
+curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-install-linux-4.19.17.tar.gz
+
+tar -xvzf /usr/sterling/Downloads/openshift-client-linux-4.19.17.tar.gz
+tar -xvzf /usr/sterling/Downloads/openshift-install-linux-4.19.17.tar.gz
+
+sudo mv /usr/sterling/Downloads/oc kubectl openshift-install /usr/sbin
+
 mkdir install
 mkdir /install/original
 

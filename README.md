@@ -547,3 +547,27 @@ When you generate the ISO with the command below, the agent-config.yaml and the 
 ```
 openshift-install --dir=/usr/sterling/install agent create image
 ```
+
+##OpenShift Installation
+
+Take the Agent ISO previously created and mount it to all Control-Plane and Worker nodes via iLO, iDRAC or whatever process is used. Ensure that the boot order is set to boot from virtual cd/dvd first and power-on all servers.<br />
+As the servers boot they will identify which server holds the rendezvous IP and begin registering with it.
+
+## Monitor OpenShift Installtion<br />
+
+Monitor the installtion from the machine which was used to create the Agent ISO. Login or ssh into the machine and navigate to the /usr/sterling/install directory. You can monitor diffrent point of the installation process or installation as a whole.<br />
+The openshift-install wait-for command is a crucial part of the OpenShift Container Platform installation process, particularly when using the openshift-install utility. Its primary function is to monitor and wait for specific stages of the OpenShift cluster<br /> installation to reach a complete and stable state.<br />
+
+***Here's how it works:***<br />
+
+*Installation Stages: The OpenShift installation process involves multiple distinct stages, such as bootstrapping the cluster, bringing up control plane nodes, deploying core components, and finally, making the cluster fully operational.<br />
+*wait-for Subcommands: The openshift-install wait-for command is typically used with a subcommand that specifies which stage to wait for. The most common one is openshift-install wait-for install-complete.<br />
+
+*Monitoring Cluster State: When executed, the wait-for command continuously monitors the state of the OpenShift cluster by interacting with its components and APIs. It checks for the successful completion of the specified installation stage.<br />
+
+*Timeouts and Retries: The command usually has a built-in timeout period. If the specified stage does not complete within this timeframe, the command will exit, potentially indicating an issue with the installation. However, it can often be re-run if a timeout occurs,<<br /> 
+allowing the installation to continue if the underlying issue was temporary or has been resolved. Signaling Completion: Once the monitored installation stage is successfully completed and the cluster reaches the desired stable state, the openshift-install wait-for<br /> command exits with a success status, signaling that the installation has progressed to that point.
+
+```
+
+```

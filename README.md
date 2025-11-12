@@ -541,7 +541,9 @@ cp /usr/sterling/install/original/*.* /install
 Make the necessary adjustments to the example files that align with the environment 
 
 from the /usr/sterling/install directory execute the following command to generate the agent iso<br />
+
 ***CAUTION***
+When you generate the ISO with the command below, the agent-config.yaml and the install-config.yaml are automatically deleted from the /usr/sterling/install directory as part of the agent iso creation. YOU MUST ENSURE THAT YOUHAVE BACKED UP THESE FILE PRIOR TO EXECUTING THE COMMAND BELOW.
 ```
 openshift-install --dir=/usr/sterling/install agent create image
 ```

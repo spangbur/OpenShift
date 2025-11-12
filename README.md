@@ -540,7 +540,7 @@ sudo chown -R sterling:sterling /home/sterling/install
 Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /home/sterling/install/original directory
 
 ```
-cp /home/sterling/install/original/*.* /install
+cp /home/sterling/install/original/*.* /home/sterling/install
 ```
 Make the necessary adjustments to the example files that align with the environment 
 

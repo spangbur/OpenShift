@@ -542,5 +542,5 @@ Make the necessary adjustments to the example files that align with the environm
 
 from the /install directory execute the following command to generate the agent iso
 ```
-open-shift-install --dir=/install agent create image
+openshift-install --dir=/install agent create image
 ```

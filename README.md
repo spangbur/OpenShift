@@ -521,16 +521,18 @@ openshift-install-linux-4.19.17.tar.gz
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-client-linux-4.19.17.tar.gz
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-install-linux-4.19.17.tar.gz
 
-tar -xvzf /home/sterling/Downloads/openshift-client-linux-4.19.17.tar.gz
-tar -xvzf /home/sterling/Downloads/openshift-install-linux-4.19.17.tar.gz
+cd /home/sterling
+
+tar -xvzf /home/sterling/openshift-client-linux-4.19.17.tar.gz
+tar -xvzf /home/sterling/openshift-install-linux-4.19.17.tar.gz
 
 sudo mv /home/sterling/Downloads/oc kubectl openshift-install /usr/sbin
 
-mkdir /home/install
-mkdir /home/install/original
+sudo mkdir /home/sterling/install
+sudo mkdir /home/sterling/install/original
 
-touch /home/sterling/install/original/agent-config.yaml
-touch /home/sterling/install/original/install-config.yaml
+sudo touch /home/sterling/install/original/agent-config.yaml
+sudo touch /home/sterling/install/original/install-config.yaml
 ```
 
 Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /install/original directory

@@ -475,16 +475,21 @@ controlPlane:
   name: master
   replicas: 3
 networking:
-  networkType: OVNKubernetes
   machineNetwork:
-    - cidr: 10.151.87.0/24
+  - cidr: 10.151.87.0/24
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  serviceNetwork:
+  - 172.30.0.0/16
+  networkType: OVNKubernetes
 platform:
   baremetal:
     apiVIPs: 
       - 10.151.87.99
     ingressVIPs: 
       - 10.151.87.100
-pullSecret: 'your secret goes here"}}}'
-sshKey: 'your ssh key goes here'
+pullSecret: 'your pull secret here'
+sshKey: 'your ssh public key here'
 ```
    

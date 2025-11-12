@@ -548,10 +548,10 @@ When you generate the ISO with the command below, the agent-config.yaml and the 
 openshift-install --dir=/usr/sterling/install agent create image
 ```
 
-##OpenShift Installation
+##OpenShift Installation<br />
 
 Take the Agent ISO previously created and mount it to all Control-Plane and Worker nodes via iLO, iDRAC or whatever process is used. Ensure that the boot order is set to boot from virtual cd/dvd first and power-on all servers.<br />
-As the servers boot they will identify which server holds the rendezvous IP and begin registering with it.
+As the servers boot they will identify which server holds the rendezvous IP and begin registering with it.<br />
 
 ## Monitor OpenShift Installtion<br />
 

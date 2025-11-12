@@ -1,6 +1,19 @@
 # OpenShift Agent-based installation
 The Installation below is based off of OpenShift 4.19.7. An Agent-based installation was chosen to quickly intergrate NVIDIA GPU's and external Dell PowerScale storage for PV creation
 
+## Ubuntu Configuration
+
+Ubuntu version 24.04.3
+
+Install Ubuntu on two servers. Configure with IP's from the OpenShift Machine Network subnet. 
+
+After installation run the following commands:
+
+sudo apt update -y && sudo upgrade -y
+sudo apt install haproxy keepalived -y
+
+sudo apt update -y
+
 ## HAProxy & Keepalived
 
 ### HAProxy-01 Example Configuration

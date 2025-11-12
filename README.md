@@ -513,7 +513,7 @@ The Agent ISO can be created on Windows, MacOS, or Linux. I've chosen Ubuntu as 
 https://mirror.openshift.com/pub/openshift-v4/clients/ocp/
 
 Requirements:
-openshift-client-linux-4.19.17.tar.gz
+openshift-client-linux-4.19.17.tar.gz<br />
 openshift-install-linux-4.19.17.tar.gz
 
 ```

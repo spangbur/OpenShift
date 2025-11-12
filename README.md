@@ -533,12 +533,14 @@ sudo mkdir /home/sterling/install/original
 
 sudo touch /home/sterling/install/original/agent-config.yaml
 sudo touch /home/sterling/install/original/install-config.yaml
+
+sudo chown -R sterling:sterling /home/sterling/install
 ```
 
-Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /install/original directory
+Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /home/sterling/install/original directory
 
 ```
-cp /usr/sterling/install/original/*.* /install
+cp /home/sterling/install/original/*.* /install
 ```
 Make the necessary adjustments to the example files that align with the environment 
 
@@ -547,7 +549,7 @@ from the /home/sterling/install directory execute the following command to gener
 ***CAUTION***<br />
 When you generate the ISO with the command below, the agent-config.yaml and the install-config.yaml are automatically deleted from the /usr/sterling/install directory as part of the agent iso creation. Please ensure that you have back up these files prior to running the command below.
 ```
-openshift-install --dir=/usr/sterling/install agent create image
+openshift-install --dir=/home/sterling/install agent create image
 ```
 
 ##OpenShift Installation<br />

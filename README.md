@@ -591,7 +591,7 @@ Once the installation is complete, navigate to the UI to ensure it's available
 ```
 https://console-openshift-console.apps.<cluster-name>.<base-domain>/
 ```
-The Kubeadmin password and the kubeconfig were automatically generated whent the Agent ISO was created. Below we'll login to the cluster with an oc command and export the kubeconfig.
+The Kubeadmin password and the kubeconfig were automatically generated when the Agent ISO was created. Below we'll cat the kubeadmin_password, login into the cluster with an oc command, and export the kubeconfig.
 
 ```
 cat /home/sterling/install/auth/kubeadmin_password
@@ -600,5 +600,5 @@ Copy the Kubeadmin_password displayed
 
 ```
 oc login https://your-openshift-cluster.com:6443 --username=kubeadmin --password=your_password
-export KUBECONFIG=/path/to/your/kubeconfig/file
+export KUBECONFIG=/home/sterling/install/auth/kubeconfig
 ```

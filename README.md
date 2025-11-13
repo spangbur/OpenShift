@@ -510,7 +510,7 @@ networking:
   networkType: OVNKubernetes
   serviceNetwork:
   - 172.30.0.0/16
-  platform:
+platform:
   baremetal:
     apiVIPs: 
       - 10.151.87.99

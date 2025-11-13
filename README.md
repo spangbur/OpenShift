@@ -603,7 +603,7 @@ cat /home/sterling/install/auth/kubeadmin_password
 Copy the Kubeadmin_password displayed 
 
 ```
-oc login https://your-openshift-cluster.com:6443 --username=kubeadmin --password=your_password
+oc login h--username=kubeadmin --password=your_password https://api.workcluster.yourdomain.com:6443
 export KUBECONFIG=/home/sterling/install/auth/kubeconfig
 ```
 ## Install Dell CSM Operator

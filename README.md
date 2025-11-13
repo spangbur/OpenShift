@@ -493,17 +493,17 @@ networking:
   clusterNetwork:
   - cidr: 10.128.0.0/14
     hostPrefix: 23
+  networkType: OVNKubernetes
   serviceNetwork:
   - 172.30.0.0/16
-  networkType: OVNKubernetes
-platform:
+  platform:
   baremetal:
     apiVIPs: 
       - 10.151.87.99
     ingressVIPs: 
       - 10.151.87.100
-pullSecret: 'your pull secret here'
-sshKey: 'your ssh public key here'
+pullSecret: $$\color{red}{'your pull secret here'}$$
+sshKey: $$\color{red}{'your ssh public key here'}$$
 ```
 
 ## Create Agent ISO
@@ -538,7 +538,7 @@ chmod 777 /home/sterling/install/original/agent-config.yaml install-config.yaml
 Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /home/sterling/install/original directory
 
 ```
-cp /home/sterling/install/original/*.* /home/sterling/install
+cp -p /home/sterling/install/original/*.* /home/sterling/install
 
 sudo dnf install nmstate -y
 sudo systemctl stop firewalld

@@ -355,6 +355,7 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:15:73"
+        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32
@@ -380,6 +381,7 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:1d:2b"
+        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32
@@ -405,6 +407,7 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:70:a3"
+        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32
@@ -430,6 +433,7 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:53:c2"
+        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32
@@ -455,6 +459,7 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:39:8d"
+        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32

@@ -18,6 +18,8 @@ sudo apt update -y
 
 ### HAProxy-01 Example Configuration
 
+Replace /etc/haproxy/haproxy.cfg with content below:
+
 ```
 #---------------------------------------------------------------------
 # Example configuration for a possible web application.  See the
@@ -146,6 +148,8 @@ backend insecure
 
 ### HAProxy-01 Keepalived Example Configuration
 
+Replace /etc/keepalived/keepalived.cfg with content below:
+
 ```
 # Global definitions for the keepalived instance
 global_defs {
@@ -184,6 +188,8 @@ vrrp_instance VI_OS_API {
 ```
 
 ### HAProxy-02 Example Configuration
+
+Replace /etc/haproxy/haproxy.cfg with content below:
 
 ```
 #---------------------------------------------------------------------
@@ -305,6 +311,8 @@ backend insecure
     server work-02 10.151.87.24:80 check
 ```
 ### HAProxy-02 Keepalivd Example Configuration
+
+Replace /etc/keepalived/keepalived.cfg with content below:
 
 ```
 # Global definitions for the keepalived instance

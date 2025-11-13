@@ -563,8 +563,8 @@ cp -p /home/sterling/install/original/*.* /home/sterling/install
 sudo dnf install nmstate -y
 sudo systemctl stop firewalld
 ```
-Make the necessary adjustments to the example files that align with the environment 
-from the /home/sterling/install directory execute the following command to generate the agent iso<br />
+Make the necessary adjustments to the example files that align with your environment 
+from the /home/sterling/install directory. Once all edits have been made to the agent-config.yaml & install-config.yaml we're ready to build the Agent ISO.<br />
 
 ***CAUTION***<br />
 When you generate the ISO with the command below, the agent-config.yaml and the install-config.yaml are automatically deleted from the /usr/sterling/install directory as part of the agent iso creation. Please ensure that you have back up these files prior to running the command below.

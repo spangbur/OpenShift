@@ -503,7 +503,7 @@ networking:
     ingressVIPs: 
       - 10.151.87.100
 pullSecret: $$\color{red}{'your pull secret here'}$$
-sshKey: <span style="color: red;">{'your ssh public key here'}>span>
+sshKey: <span style="color: red;">{'your ssh public key here'}>/span>
 ```
 
 ## Create Agent ISO

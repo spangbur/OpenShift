@@ -584,9 +584,10 @@ As the servers boot they will identify which server holds the rendezvous IP and 
 
 ## Monitor OpenShift Installtion<br />
 
-Run the command below while in the /home/sterling/install directory to monitor the bootstrap process. It is expected to see connection refused and timeout errors during the initial installation. You have to provide time for the OS and OpenShift to be installed on all machines
+Run the first command below below while in the /home/sterling/install directory to monitor the bootstrap process. Once the bootstrap completes you can run the second command to monitor the API availability.
 ```
-openshift-install wait-for install-complete --dir=/home/sterling/install --log-level debug
+openshift-install wait-for bootstrap-complete
+openshift-install wait-for install-complete
 ```
 ## OpenShift Installation Complete
 

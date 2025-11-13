@@ -519,13 +519,13 @@ openshift-install-linux-4.19.17.tar.gz
 ```
 cd  /home/sterling/Downloads
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-client-linux-4.19.17.tar.gz
-curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-install-linux-4.19.17.tar.gz
+curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-$$\color{red}install-linux-4.19.17.tar.gz
 
 tar -xvzf /home/sterling/Downloads/openshift-client-linux-4.19.17.tar.gz
 tar -xvzf /home/sterling/Downloads/openshift-install-linux-4.19.17.tar.gz
 
 sudo mv /home/sterling/Downloads/oc kubectl openshift-install /usr/sbin
-
+$$\color{red}
 mkdir /home/sterling/install
 mkdir /home/sterling/install/original
 
@@ -572,6 +572,7 @@ The openshift-install wait-for command is a crucial part of the OpenShift Contai
 ***Here's how it works:***<br />
 
 *Installation Stages: The OpenShift installation process involves multiple distinct stages, such as bootstrapping the cluster, bringing up control plane nodes, deploying core components, and finally, making the cluster fully operational.<br />
+
 *wait-for Subcommands: The openshift-install wait-for command is typically used with a subcommand that specifies which stage to wait for. The most common one is openshift-install wait-for install-complete.<br />
 
 *Monitoring Cluster State: When executed, the wait-for command continuously monitors the state of the OpenShift cluster by interacting with its components and APIs. It checks for the successful completion of the specified installation stage.<br />

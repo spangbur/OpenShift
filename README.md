@@ -577,7 +577,7 @@ The openshift-install wait-for command is a crucial part of the OpenShift Contai
 *Monitoring Cluster State: When executed, the wait-for command continuously monitors the state of the OpenShift cluster by interacting with its components and APIs. It checks for the successful completion of the specified installation stage.<br />
 
 *Timeouts and Retries: The command usually has a built-in timeout period. If the specified stage does not complete within this timeframe, the command will exit, potentially indicating an issue with the installation. However, it can often be re-run if a timeout occurs,
-allowing the installation to continue if the underlying issue was temporary or has been resolved. Signaling Completion: Once the monitored installation stage is successfully completed and the cluster reaches the desired stable state, the openshift-install wait-for<br /> command exits with a success status, signaling that the installation has progressed to that point.
+allowing the installation to continue if the underlying issue was temporary or has been resolved. Signaling Completion: Once the monitored installation stage is successfully completed and the cluster reaches the desired stable state, the openshift-install wait-for command exits with a success status, signaling that the installation has progressed to that point.
 
 ```
 

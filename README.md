@@ -584,8 +584,3 @@ Once the installation is complete, navigate to the UI to ensure it's available
 https://console-openshift-console.apps.<cluster-name>.<base-domain>/
 ```
 
-
-
-```
-
-```

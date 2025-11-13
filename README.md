@@ -566,7 +566,7 @@ openshift-install wait-for bootstrap-complete --dir=/home/sterling/install --log
 ```
 
 
-Monitor the installtion from the machine which was used to create the Agent ISO. Login or ssh into the machine and navigate to the /usr/sterling/install directory. You can monitor diffrent point of the installation process or installation as a whole.<br />
+Monitor the installtion from the machine which was used to create the Agent ISO. Login or ssh into the machine and navigate to the /usr/sterling/install directory. You can monitor diffrent point of the installation process or installation as a whole.
 The openshift-install wait-for command is a crucial part of the OpenShift Container Platform installation process, particularly when using the openshift-install utility. Its primary function is to monitor and wait for specific stages of the OpenShift cluster<br /> installation to reach a complete and stable state.<br />
 
 ***Here's how it works:***<br />

@@ -555,7 +555,7 @@ chmod 600 /home/sterling/install/original/agent-config.yaml install-config.yaml
 
 ```
 
-Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /home/sterling/install/original directory
+Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /home/sterling/install/original directory. Use your preferred editor to paste content into the empty files we created. Once completed proceed with the commands below.
 
 ```
 cp -p /home/sterling/install/original/*.* /home/sterling/install
@@ -564,7 +564,6 @@ sudo dnf install nmstate -y
 sudo systemctl stop firewalld
 ```
 Make the necessary adjustments to the example files that align with the environment 
-
 from the /home/sterling/install directory execute the following command to generate the agent iso<br />
 
 ***CAUTION***<br />

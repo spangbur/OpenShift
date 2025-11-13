@@ -15,9 +15,14 @@ sudo apt install haproxy keepalived -y
 
 sudo apt update -y
 
-sudo ufw allow ssh,6443,22623,443,80
+sudo ufw allow 22
+sudo ufw allow 8404
+sudo ufw allow 6443
+sudo ufw allow 22623
+sudo ufw allow 443
 
 sudo ufw enable
+sudo systemctl enable ufw
 
 ```
 ## HAProxy & Keepalived

@@ -1,0 +1,10 @@
+isilonClusters:
+- clusterName: "storage-cluster-name"
+  username: "username"
+  password: "password"
+  isDefault: true 
+  isiPath: "/ifs/data/csi-dev" #Remove this line if going to default path /ifs/data
+  endpoint: "storage ip or fdqn"
+  skipCertificateValidation: true
+              
+

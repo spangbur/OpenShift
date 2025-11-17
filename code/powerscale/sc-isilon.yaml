@@ -1,0 +1,19 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+   name: isilon
+provisioner: csi-isilon.dellemc.com
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+IsiVolumePathPermissions: "0775"
+mountOptions: ["vers=4"]
+parameters:  
+   ClusterName: <Cluster name>
+   AccessZone: data  
+   AzServiceIP: <storage-endpoint> 
+   IsiPath: /ifs/data/csi-dev 
+   RootClientEnabled: "false" 
+   csi.storage.k8s.io/fstype: "nfs" 
+volumeBindingMode: Immediate
+
+

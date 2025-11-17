@@ -607,27 +607,14 @@ Copy the Kubeadmin_password displayed
 oc login --username=kubeadmin --password=your_password https://api.workcluster.yourdomain.com:6443
 export KUBECONFIG=/home/sterling/install/auth/kubeconfig
 ```
-## Install Dell CSM Operator
-In the OpenShit console navigate to the OperatorHub and search for dell-csm-operator, and click install
+## Install Dell CSM Operator and associated PowerScale CSI
+Use the following guide to properly install and test
 
-Set approval strategy to "Manual"
+https://dell.github.io/csm-docs/docs/getting-started/installation/openshift/powerscale/csmoperator/
 
-Create a Namespace called "powerscel" for the installation,  this can be done via oc command or thru the UI.
 
-Create a Secret to interact with the Powerscale
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: powerscale-secret
-  namespace: powerstor
-type: Opaque
-data:
-  ISI_PASSWORD: <Base64 encoded password>
-  ISI_USER: <Base64 encoded username>
-  ISI_IP: <Base64 encoded IP address>
-  ISI_PORT: <Base64 encoded port>
-  ISI_ARRAY_ID: <Base64 encoded array ID>
+
+```
 
 ```

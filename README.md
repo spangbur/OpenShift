@@ -612,7 +612,7 @@ Use the following guide to properly install and test
 
 https://dell.github.io/csm-docs/docs/getting-started/installation/openshift/powerscale/csmoperator/
 
-
+$\color{#f00}{\textsf{lorem ipsum}}$
 
 
 ```

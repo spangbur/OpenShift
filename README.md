@@ -8,7 +8,7 @@ Ubuntu version 24.04.3
 Install Ubuntu on two servers. Configure with IP's from the OpenShift Machine Network subnet. 
 
 After installation run the following commands:
-```
+```bash
 sudo apt update -y && sudo upgrade -y
 
 sudo apt install haproxy keepalived -y
@@ -31,7 +31,7 @@ sudo systemctl enable ufw
 
 Replace /etc/haproxy/haproxy.cfg with content below:
 
-```
+```bash
 #---------------------------------------------------------------------
 # Example configuration for a possible web application.  See the
 # full configuration options online.
@@ -86,7 +86,6 @@ defaults
     option                  httplog
     option                  dontlognull
     option http-server-close
-sterling@haproxy-01:/etc/haproxy$
     option                  redispatch
     retries                 3
     timeout http-request    10s
@@ -161,7 +160,7 @@ backend insecure
 
 Replace /etc/keepalived/keepalived.cfg with content below:
 
-```
+```bash
 # Global definitions for the keepalived instance
 global_defs {
     router_id LBR-MASTER  # A unique identifier for this node
@@ -202,7 +201,7 @@ vrrp_instance VI_OS_API {
 
 Replace /etc/haproxy/haproxy.cfg with content below:
 
-```
+```bash
 #---------------------------------------------------------------------
 # Example configuration for a possible web application.  See the
 # full configuration options online.
@@ -325,7 +324,7 @@ backend insecure
 
 Replace /etc/keepalived/keepalived.cfg with content below:
 
-```
+```bash
 # Global definitions for the keepalived instance
 global_defs {
     router_id LBR-MASTER  # A unique identifier for this node
@@ -541,7 +540,7 @@ Requirements:<br />
 openshift-client-linux-4.19.17.tar.gz<br />
 openshift-install-linux-4.19.17.tar.gz
 
-```
+```bash
 cd  /home/sterling/Downloads
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-client-linux-4.19.17.tar.gz
 curl -O https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.19.17/openshift-install-linux-4.19.17.tar.gz
@@ -562,7 +561,7 @@ chmod 600 /home/sterling/install/original/agent-config.yaml install-config.yaml
 
 Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /home/sterling/install/original directory. Use your preferred editor to paste content into the empty files we created. Once completed proceed with the commands below.
 
-```
+```bash
 cp -p /home/sterling/install/original/*.* /home/sterling/install
 
 sudo dnf install /usr/bin/nmstatectl -y
@@ -573,7 +572,7 @@ from the /home/sterling/install directory. Once all edits have been made to the 
 
 ***CAUTION***<br />
 When you generate the ISO with the command below, the agent-config.yaml and the install-config.yaml are automatically deleted from the /usr/sterling/install directory as part of the agent iso creation. Please ensure that you have back up these files prior to running the command below.
-```
+```bash
 openshift-install --dir=/home/sterling/install agent create image
 ```
 
@@ -585,7 +584,7 @@ As the servers boot they will identify which server holds the rendezvous IP and 
 ## Monitor OpenShift Installtion<br />
 
 Run the first command below below while in the /home/sterling/install directory to monitor the bootstrap process. Once the bootstrap completes you can run the second command to monitor the API availability.
-```
+```bash
 openshift-install wait-for bootstrap-complete
 openshift-install wait-for install-complete
 ```
@@ -598,12 +597,12 @@ https://console-openshift-console.apps.<cluster-name>.<base-domain>/
 ```
 The Kubeadmin password and the kubeconfig were automatically generated when the Agent ISO was created. Below we'll cat the kubeadmin_password, login into the cluster with an oc command, and export the kubeconfig.
 
-```
+```bash
 cat /home/sterling/install/auth/kubeadmin_password
 ```
 Copy the Kubeadmin_password displayed 
 
-```
+```bash
 oc login --username=kubeadmin --password=your_password https://api.workcluster.yourdomain.com:6443
 export KUBECONFIG=/home/sterling/install/auth/kubeconfig
 ```

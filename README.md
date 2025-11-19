@@ -103,7 +103,7 @@ sterling@haproxy-01:/etc/haproxy$
 
 frontend stats
    mode http
-   bind $\color{#f00}{\textsf{*:8404}}$   
+   bind *:8404   
    stats enable
    stats refresh 10s
    stats uri /stats
@@ -612,7 +612,7 @@ Use the following guide to properly install and test
 
 https://dell.github.io/csm-docs/docs/getting-started/installation/openshift/powerscale/csmoperator/
 
-$\color{#f00}{\textsf{lorem ipsum}}$
+
 
 
 ```

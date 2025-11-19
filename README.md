@@ -102,7 +102,7 @@ defaults
 
 frontend stats
    mode http
-   bind *:8404   
+   bind *:8404  #Change for your desired port   
    stats enable
    stats refresh 10s
    stats uri /stats
@@ -270,7 +270,7 @@ defaults
 
 frontend stats
   mode http
-  bind *:8404
+  bind *:8404   #Change for your desired port
   stats enable
   stats refresh 10s
   stats uri /stats

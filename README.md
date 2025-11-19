@@ -103,7 +103,7 @@ sterling@haproxy-01:/etc/haproxy$
 
 frontend stats
    mode http
-   bind $${\color{purple}\textsf{Sans Serif Purple}}$$   
+   bind $${\color{red}This should be red}$$   
    stats enable
    stats refresh 10s
    stats uri /stats

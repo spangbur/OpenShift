@@ -606,6 +606,21 @@ Copy the Kubeadmin_password displayed
 oc login --username=kubeadmin --password=your_password https://api.workcluster.yourdomain.com:6443
 export KUBECONFIG=/home/sterling/install/auth/kubeconfig
 ```
+## Podman Login
+
+We'll use Podman to login to each of the following registries 
+
+docker.io
+quay.io
+registry.access.redhat.com
+registry.redhat.io
+
+## Create Secret
+
+```bash
+mkdir /home/sterling/.config/containers/
+oc create secret generic mysecret --from-file=/home/sterling/.config/containers/auth.json --type=kubernetes.io/podmanconfigjson
+````
 ## Install Dell CSM Operator and associated PowerScale CSI
 Use the following guide to properly install and test
 

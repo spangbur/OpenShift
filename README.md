@@ -610,10 +610,10 @@ export KUBECONFIG=/home/sterling/install/auth/kubeconfig
 
 We'll use Podman to login to each of the following registries 
 
-docker.io
-quay.io
-registry.access.redhat.com
-registry.redhat.io
+* docker.io
+* quay.io
+* registry.access.redhat.com
+* registry.redhat.io
 
 ## Create Secret
 

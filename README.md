@@ -675,7 +675,7 @@ cd ~
 sudo mkdir /etc/haproxy/ssl
 sudo cp /certs/haproxy_api.pem haproxy_in.pem /etc/haproxy/ssl/
 sudo chmod 644 /etc/haproxy/ssl*
-sudo chmod 700 /etc/haproxy/ssl
+sudo chmod 755 /etc/haproxy/ssl
 
 ```
 ***CAUTION***</br>

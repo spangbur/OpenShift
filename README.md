@@ -626,9 +626,94 @@ Use the following guide to properly install and test
 
 https://dell.github.io/csm-docs/docs/getting-started/installation/openshift/powerscale/csmoperator/
 
+## Create Certificate for API and Ingress VIP's
 
+Create CSR on you Load Balancer
 
+```bash
+
+cd ~
+mkdir certs
+cd certs
+
+openssl req -new -newkey rsa:2048 -nodes -keyout api.key -out api.csr
+openssl req -new -newkey rsa:2048 -nodes -keyout in.key -out in.csr
 
 ```
 
+Retrieve certificate and full chain in two seperate files. The cert chains happens to be in the wrong format and needs to be converted
+
+````bash
+
+openssl pkcs7 -print_certs -in apichain.p7b -out apichain.crt
+openssl pkcs7 -print_certs -in inchain.p7b -out inchain.crt
+
+````
+
+Combined the certificate with the newly created full chain
+
+````bash
+
+cat api.cer apichain.crt > api_full.pem
+cat api.cer inchain.crt > in_full.pem
+
+````
+Combined the new full chain with the private key
+
+````bash
+
+cat api_full.pem api.key > haproxy_api.pem
+cat in_full.pem api.key > haproxy_in.pem
+
+````
+
+Create a new directory and copy files
+
+```bash
+
+cd ~
+sudo mkdir /etc/haproxy/ssl
+sudo cp /certs/haproxy_api.pem haproxy_in.pem /etc/haproxy/ssl/
+sudo chmod 644 /etc/haproxy/ssl*
+sudo chmod 700 /etc/haproxy/ssl
+
 ```
+***CAUTION***</br>
+Beofre proceeding to the next section, ensure you have ssh access to one of the openshift nodes. Additionally ensure that you can successfully run oc commands against the cluster. Once the change is made below to the loadbalancer config you will loss access to the UI. Additional configuration to the cluster need to be made to restore access
+
+Update the /etc/haproxy/haproxy.cfg Frontend as follows
+
+```bash
+# main frontend which proxys to the backends
+#---------------------------------------------------------------------
+
+frontend stats
+   mode http
+   bind *:8404
+   stats enable
+   stats refresh 10s
+   stats uri /stats
+   stats show-modules
+   stats realm Haproxy\ Statistics
+   stats show-legends
+   stats show-node
+   stats admin if TRUE
+
+frontend api
+   bind *:6443 ssl crt /etc/haproxy/ssl/haproxy_api.pem   #Update this section
+   default_backend controlplaneapi
+
+frontend apiinternal
+   bind *:22623
+   default_backend controlplaneapiinternal
+
+frontend secure
+   bind *:443 ssl crt /etc/haproxy/ssl/haproxy_in.pem   #Update this section
+   default_backend secure
+
+frontend insecure
+   bind *:80
+   default_backend insecure
+
+````
+

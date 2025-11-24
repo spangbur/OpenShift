@@ -163,6 +163,14 @@ backend insecure
 
 ```
 
+## Restart service
+
+```bash
+
+sudo systemctl restart haproxy.service
+
+```
+
 ### HAProxy-01 Keepalived Example Configuration
 
 Replace /etc/keepalived/keepalived.cfg with content below:
@@ -202,6 +210,14 @@ vrrp_instance VI_OS_API {
         check_haproxy        # Track the health script
     }
 }
+
+```
+
+## Restart service
+
+```bash
+
+sudo systemctl restart keeplived.service
 
 ```
 
@@ -338,6 +354,14 @@ backend insecure
     server work-02 10.151.87.24:80 check
    
 ```
+## Restart service
+
+```bash
+
+sudo systemctl restart haproxy.service
+
+```
+
 ### HAProxy-02 Keepalivd Example Configuration
 
 Replace /etc/keepalived/keepalived.cfg with content below:
@@ -379,6 +403,14 @@ vrrp_instance VI_OS_API {
 }
 
 ```
+## Restart service
+
+```bash
+
+sudo systemctl restartkeeplived.service
+
+```
+
 ## Agent-config.yaml Example
 ```yaml
 apiVersion: v1alpha1

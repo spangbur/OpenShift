@@ -32,6 +32,7 @@ sudo systemctl enable ufw
 Replace /etc/haproxy/haproxy.cfg with content below:
 
 ```bash
+
 #---------------------------------------------------------------------
 # Example configuration for a possible web application.  See the
 # full configuration options online.
@@ -58,7 +59,7 @@ global
     #    local2.*                       /var/log/haproxy.log
     #
     log         127.0.0.1 local0 info
-
+     
 
 
     chroot      /var/lib/haproxy
@@ -80,12 +81,13 @@ global
 # use if not designated in their block
 #---------------------------------------------------------------------
 defaults
-
+    
     mode                    tcp
     log                     global
     option                  httplog
     option                  dontlognull
     option http-server-close
+    option forwardfor       except 127.0.0.0/8
     option                  redispatch
     retries                 3
     timeout http-request    10s
@@ -102,7 +104,7 @@ defaults
 
 frontend stats
    mode http
-   bind *:8404  #Change for your desired port   
+   bind *:8404
    stats enable
    stats refresh 10s
    stats uri /stats
@@ -113,18 +115,22 @@ frontend stats
    stats admin if TRUE
 
 frontend api
-   bind *:6443
+   bind *:6443 
+   mode tcp 
    default_backend controlplaneapi
 
 frontend apiinternal
+   mode tcp
    bind *:22623
    default_backend controlplaneapiinternal
 
 frontend secure
-   bind *:443
+   bind *:443 
+   mode tcp
    default_backend secure
 
 frontend insecure
+   mode tcp
    bind *:80
    default_backend insecure
 
@@ -133,27 +139,32 @@ frontend insecure
 #---------------------------------------------------------------------
 
 backend controlplaneapi
-   balance source
+   mode tcp
+   balance roundrobin
    server controller-01 10.151.87.20:6443 check
    server controller-02 10.151.87.21:6443 check
    server controller-03 10.151.87.22:6443 check
 
 
 backend controlplaneapiinternal
-   balance source
+   mode tcp
+   balance roundrobin
    server controller-01 10.151.87.20:22623 check
    server controller-02 10.151.87.21:22623 check
    server controller-03 10.151.87.22:22623 check
 
 backend secure
-   balance source
+   mode tcp
+   balance roundrobin
    server work-01 10.151.87.23:443 check
    server work-02 10.151.87.24:443 check
-
+    
 backend insecure
-   balance source
+   mode tcp
+   balance roundrobin
    server work-01 10.151.87.23:80 check
    server work-02 10.151.87.24:80 check
+
 ```
 
 ### HAProxy-01 Keepalived Example Configuration

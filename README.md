@@ -608,7 +608,7 @@ mkdir /home/sterling/install/original
 
 sudo touch /home/sterling/install/original/agent-config.yaml
 sudo touch /home/sterling/install/original/install-config.yaml
-sudo chown 600 /home/sterling/install/original/agent-config; sudo chown 600 /home/sterling/install/original/install-config.yaml
+sudo chown sterling /home/sterling/install/original/agent-config; sudo chown sterling /home/sterling/install/original/install-config.yaml
 sudo chmod 600 /home/sterling/install/original/agent-config; sudo chmod 600 /home/sterling/install/original/install-config.yaml
 ```
 

@@ -539,7 +539,6 @@ networking:
   clusterNetwork:
   - cidr: 10.128.0.0/14
     hostPrefix: 23
-    mtu: 8900
   networkType: OVNKubernetes
   serviceNetwork:
   - 172.30.0.0/16
@@ -588,7 +587,7 @@ Copy the contents of the example agent-config.yaml and install-config.yaml to th
 cp -p /home/sterling/install/original/*.* /home/sterling/install
 
 sudo dnf install /usr/bin/nmstatectl -y
-sudo systemctl stop firewalld
+
 ```
 Make the necessary adjustments to the example files that align with your environment 
 from the /home/sterling/install directory. Once all edits have been made to the agent-config.yaml & install-config.yaml we're ready to build the Agent ISO.<br />
@@ -666,9 +665,40 @@ openssl req -new -newkey rsa:2048 -nodes -keyout in.key -out in.csr
 
 Send CSR off to 3rd party for certificate generation. Once complete bring the certificate back to the machine where the CSR was generated and complete the following steps to update the cluster
 
-```bash
-openssl req -new -newkey rsa:2048 -nodes -keyout server.key -out server.csr -subj "/CN=api.workcluster.leidos.lab" -reqexts SAN -config <(printf "[req]\ndistinguished_name=req_distinguished_name\n[req_distinguished_name]\n[SAN]\nsubjectAltName=DNS:api.yourcluster.example.com,DNS:*.apps.yourcluster.example.com")
+##Example req.conf
 
+```bash
+
+[ req ]
+default_bits = 2048
+prompt = no
+encrypt_key = no
+default_md = sha256
+distinguished_name = dn
+req_extensions = req_ext
+
+[ dn ]
+CN = api.workcluster.sterling.xyz
+O = YourOrganization
+OU = YourOU
+L = YourLocation
+ST = YourState
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = api.workcluster.sterling.xyz
+DNS.2 = *.apps.workcluster.sterling.xyz
+
+```
+
+##Create CSR and Private Key
+```bash
+
+openssl req -new -newkey:4096 -nodes -keyout ocp.key -out ocp.csr -config /home/sterling/certs/req.conf
+
+```
 
 oc create secret tls cluster-certs --cert=certnew.cer --key=openshift.key -n openshift-ingress
 

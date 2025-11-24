@@ -608,8 +608,8 @@ mkdir /home/sterling/install/original
 
 sudo touch /home/sterling/install/original/agent-config.yaml
 sudo touch /home/sterling/install/original/install-config.yaml
-sudo chown sterling /home/sterling/install/original/agent-config; sudo chown sterling /home/sterling/install/original/install-config.yaml
-sudo chmod 600 /home/sterling/install/original/agent-config; sudo chmod 600 /home/sterling/install/original/install-config.yaml
+sudo chown sterling /home/sterling/install/original/agent-config.yaml; sudo chown sterling /home/sterling/install/original/install-config.yaml
+sudo chmod 600 /home/sterling/install/original/agent-config.yaml; sudo chmod 600 /home/sterling/install/original/install-config.yaml
 ```
 
 Copy the contents of the example agent-config.yaml and install-config.yaml to the newly created files in the /home/sterling/install/original directory. Use your preferred editor to paste content into the empty files we created. Once completed proceed with the commands below.

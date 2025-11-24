@@ -683,7 +683,7 @@ https://dell.github.io/csm-docs/docs/getting-started/installation/openshift/powe
 
 ## Create Certificate for API and Ingress VIP's
 
-Create CSR and unencrypted private key on a linux machine outside of the cluster
+Below, we create a working directory and create an answer file (req.conf) for the CSR and Private Key generation
 
 ```bash
 
@@ -691,12 +691,8 @@ cd ~
 mkdir certs
 cd certs
 
-openssl req -new -newkey rsa:2048 -nodes -keyout api.key -out api.csr
-openssl req -new -newkey rsa:2048 -nodes -keyout in.key -out in.csr
-
 ```
 
-Send CSR off to 3rd party for certificate generation. Once complete bring the certificate back to the machine where the CSR was generated and complete the following steps to update the cluster
 
 ##Example req.conf
 
@@ -732,6 +728,11 @@ DNS.2 = *.apps.workcluster.sterling.xyz
 openssl req -new -newkey:4096 -nodes -keyout ocp.key -out ocp.csr -config /home/sterling/certs/req.conf
 
 ```
+
+##Send CSR off to 3rd party for certificate generation. Once complete bring the certificate back to the machine where the CSR was generated and complete the following steps to update the cluster
+
+
+```bask
 
 oc create secret tls cluster-certs --cert=certnew.cer --key=openshift.key -n openshift-ingress
 

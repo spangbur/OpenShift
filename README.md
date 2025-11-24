@@ -1,6 +1,10 @@
 # OpenShift Agent-Based Installation
 The Installation below is based off of OpenShift 4.19.7. An Agent-based installation was chosen to quickly intergrate NVIDIA GPU's and external Dell PowerScale storage for PV creation
 
+
+##prerequisite
+DNS "A" and "PTR" or local host files entries made to support the installation
+
 ## Ubuntu Configuration
 
 Ubuntu version 24.04.3

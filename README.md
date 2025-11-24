@@ -9,7 +9,7 @@ Install Ubuntu on two servers. Configure with IP's from the OpenShift Machine Ne
 
 After installation run the following commands:
 ```bash
-sudo apt update -y && sudo upgrade -y
+sudo apt update -y ; sudo upgrade -y
 
 sudo apt install haproxy keepalived -y
 

@@ -196,7 +196,7 @@ vrrp_instance VI_OS_API {
     advert_int 1             # Advertisement interval in seconds
     authentication {
         auth_type PASS       # Simple password authentication
-        auth_pass YOUR PASSWORD HERE    # Must match on all load balancers
+        auth_pass apipass    # Must match on all load balancers
     }
     virtual_ipaddress {
         10.151.87.9/24 dev ens33       # The OpenShift API VIP (api.<cluster-name>.<base-domain>)
@@ -206,6 +206,7 @@ vrrp_instance VI_OS_API {
         check_haproxy        # Track the health script
     }
 }
+
 ```
 
 ### HAProxy-02 Example Configuration

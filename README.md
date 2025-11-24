@@ -407,7 +407,7 @@ vrrp_instance VI_OS_API {
 
 ```bash
 
-sudo systemctl restartkeeplived.service
+sudo systemctl restart keeplived.service
 
 ```
 

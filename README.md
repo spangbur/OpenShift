@@ -214,37 +214,38 @@ vrrp_instance VI_OS_API {
 Replace /etc/haproxy/haproxy.cfg with content below:
 
 ```bash
+
 #---------------------------------------------------------------------
 # Example configuration for a possible web application.  See the
 # full configuration options online.
 #
-#   https://www.haproxy.org/download/1.8/doc/configuration.txt--------
-# static backend
+#   https://www.haproxy.org/download/1.8/doc/configuration.txt
+#
 #---------------------------------------------------------------------
 
 #---------------------------------------------------------------------
 # Global settings
 #---------------------------------------------------------------------
-globalver controller-02 10.151.87.21:6443 check
+global
     # to have these messages end up in /var/log/haproxy.log you will
     # need to:
     #
     # 1) configure syslog to accept network log events.  This is done
     #    by adding the '-r' option to the SYSLOGD_OPTIONS in
-    #    /etc/sysconfig/syslog.87.20:22623 check
-    #rver controller-02 10.151.87.21:22623 check
+    #    /etc/sysconfig/syslog
+    #
     # 2) configure local2 events to go to the /var/log/haproxy.log
     #   file. A line like the following can be added to
     #   /etc/sysconfig/syslog
-    #lance source
+    #
     #    local2.*                       /var/log/haproxy.log
-    #rver work-02 10.151.87.24:443 check
+    #
     log         127.0.0.1 local2
-backend insecure
+
     chroot      /var/lib/haproxy
-    pidfile     /var/run/haproxy.pideck
-    maxconn     4000.151.87.24:80 check
-    user        haproxyc/haproxy$
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
     group       haproxy
     daemon
 
@@ -282,7 +283,7 @@ defaults
 
 frontend stats
   mode http
-  bind *:8404   #Change for your desired port
+  bind *:8404
   stats enable
   stats refresh 10s
   stats uri /stats
@@ -290,19 +291,23 @@ frontend stats
   stats admin if TRUE
 
 frontend api
-    bind *:6443
+    bind *:6443 
+    mode tcp
     default_backend controlplaneapi
 
 frontend apiinternal
     bind *:22623
+    mode tcp
     default_backend controlplaneapiinternal
 
 frontend secure
-    bind *:443
+    bind *:443 
+    mode tcp
     default_backend secure
 
 frontend insecure
     bind *:80
+    mode tcp
     default_backend insecure
 
 #---------------------------------------------------------------------
@@ -310,27 +315,32 @@ frontend insecure
 #---------------------------------------------------------------------
 
 backend controlplaneapi
-    balance source
+    mode tcp
+    balance roundrobin
     server controller-01 10.151.87.20:6443 check
     server controller-02 10.151.87.21:6443 check
     server controller-03 10.151.87.22:6443 check
 
 
 backend controlplaneapiinternal
-    balance source
+    mode tcp
+    balance roundrobin
     server controller-01 10.151.87.20:22623 check
     server controller-02 10.151.87.21:22623 check
     server controller-03 10.151.87.22:22623 check
 
 backend secure
-    balance source
+    mode tcp
+    balance roundrobin
     server work-01 10.151.87.23:443 check
     server work-02 10.151.87.24:443 check
-
+    
 backend insecure
-    balance source
+    mode tcp
+    balance roundrobin
     server work-01 10.151.87.23:80 check
     server work-02 10.151.87.24:80 check
+   
 ```
 ### HAProxy-02 Keepalivd Example Configuration
 

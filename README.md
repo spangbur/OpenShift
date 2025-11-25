@@ -428,12 +428,12 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:15:73"
-        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32
           type: ethernet
           state: up
+          mtu: "9000"
           ipv4:
             enabled: true
             address:
@@ -442,7 +442,7 @@ hosts:
       dns-resolver:
         config:
           server:
-            - 10.151.87.250
+            - 10.151.87.251
       routes:
         config:
           - destination: 0.0.0.0/0
@@ -454,12 +454,12 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:1d:2b"
-        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32
           type: ethernet
           state: up
+          mtu: "9000"
           ipv4:
             enabled: true
             address:
@@ -468,7 +468,7 @@ hosts:
       dns-resolver:
         config:
           server:
-            - 10.151.87.250
+            - 10.151.87.251
       routes:
         config:
           - destination: 0.0.0.0/0
@@ -480,12 +480,12 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:70:a3"
-        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32
           type: ethernet
           state: up
+          mtu: "9000"
           ipv4:
             enabled: true
             address:
@@ -494,7 +494,7 @@ hosts:
       dns-resolver:
         config:
           server:
-            - 10.151.87.250
+            - 10.151.87.251
       routes:
         config:
           - destination: 0.0.0.0/0
@@ -506,12 +506,12 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:53:c2"
-        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32
           type: ethernet
           state: up
+          mtu: "9000"
           ipv4:
             enabled: true
             address:
@@ -520,7 +520,7 @@ hosts:
       dns-resolver:
         config:
           server:
-            - 10.151.87.250
+            - 10.151.87.251
       routes:
         config:
           - destination: 0.0.0.0/0
@@ -532,12 +532,12 @@ hosts:
     interfaces:
       - name: ens32
         macAddress: "00:50:56:91:39:8d"
-        mtu: 9000
     networkConfig:
       interfaces:
         - name: ens32
           type: ethernet
           state: up
+          mtu: "9000"
           ipv4:
             enabled: true
             address:
@@ -546,12 +546,13 @@ hosts:
       dns-resolver:
         config:
           server:
-            - 10.151.87.250
+            - 10.151.87.251
       routes:
         config:
           - destination: 0.0.0.0/0
             next-hop-address: 10.151.87.1
             next-hop-interface: ens32
+
 ```
 ## Install-config.yaml Example
 ```yaml

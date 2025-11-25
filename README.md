@@ -750,6 +750,10 @@ oc patch proxy/cluster \
   --type=merge \
   --patch='{"spec":{"trustedCA":{"name":"custom-ca"}}}'
 
+oc create secret tls custom-api-cert --cert=/home/sterling/certs/openshift.cer --key=/home/sterling/certs/ocp.key -n openshift-config
+
+oc patch apiserver cluster --type=merge -p='{"spec":{"servingCerts": {"namedCertificates": [{"names": ["api.workcluster.leidos.lab"], "servingCertificate": {"name":"custom-api-cert"}}]}}}'
+
 update browser with root ca
 
 ~~~

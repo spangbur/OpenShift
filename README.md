@@ -726,7 +726,7 @@ DNS.2 = *.apps.workcluster.sterling.xyz
 ##Create CSR and Private Key
 ```bash
 
-openssl req -new -newkey:4096 -nodes -keyout ocp.key -out ocp.csr -config /home/sterling/certs/req.conf
+openssl req -new -newkey rsa:4096 -nodes -keyout ocp.key -out ocp.csr -config /home/sterling/certs/req.conf
 
 ```
 

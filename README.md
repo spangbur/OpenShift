@@ -762,3 +762,9 @@ update browser with root ca
 ###Nvidia Installation
 https://docs.nvidia.com/datacenter/cloud-native/openshift/25.10/install-gpu-ocp.html
 
+Additionally, if the system uses a GPU based on the NVIDIA Ampere architecture or later and plans to use NVIDIA vGPU, SR-IOV must be enabled in the BIOS.
+ Furthermore, if the system has Secure Boot enabled in the BIOS, it may prevent the NVIDIA driver pod from becoming "Ready" during installation; disabling Secure Boot is advised to avoid this issue.
+
+Once the hardware is confirmed and any necessary BIOS settings are adjusted, the next steps involve installing the NFD Operator from the Red Hat OperatorHub, which will label the nodes with the appropriate hardware features, such as feature.node.kubernetes.io/pci-10de.present=true.
+ Only after this is confirmed should the NVIDIA GPU Operator be installed, followed by creating a ClusterPolicy instance to complete the setup.
+

@@ -758,4 +758,7 @@ update browser with root ca
 
 ~~~
 
+```
+###Nvidia Installation
+https://docs.nvidia.com/datacenter/cloud-native/openshift/25.10/install-gpu-ocp.html
 

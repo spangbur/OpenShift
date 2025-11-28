@@ -759,12 +759,17 @@ update browser with root ca
 ~~~
 
 ```
-###Nvidia Installation
-https://docs.nvidia.com/datacenter/cloud-native/openshift/25.10/install-gpu-ocp.html
+###Nvidia Installation<br />
+https://docs.nvidia.com/datacenter/cloud-native/openshift/25.10/install-nfd.html
 
-Additionally, if the system uses a GPU based on the NVIDIA Ampere architecture or later and plans to use NVIDIA vGPU, SR-IOV must be enabled in the BIOS.
- Furthermore, if the system has Secure Boot enabled in the BIOS, it may prevent the NVIDIA driver pod from becoming "Ready" during installation; disabling Secure Boot is advised to avoid this issue.
+The correct deployment order for the NFD, NVIDIA Network Operator, and NVIDIA GPU Operator in OpenShift is as follows, based on their prerequisites and dependencies:
 
-Once the hardware is confirmed and any necessary BIOS settings are adjusted, the next steps involve installing the NFD Operator from the Red Hat OperatorHub, which will label the nodes with the appropriate hardware features, such as feature.node.kubernetes.io/pci-10de.present=true.
- Only after this is confirmed should the NVIDIA GPU Operator be installed, followed by creating a ClusterPolicy instance to complete the setup.
+Node Feature Discovery (NFD) Operator<br />
+The NFD operator is a prerequisite for both the NVIDIA GPU Operator and the NVIDIA Network Operator because it is responsible for detecting hardware features (like the presence of GPUs and specific NICs) and labeling the nodes accordingly.
 
+NVIDIA Network Operator (if required for high-speed networking/GPUDirect RDMA)<br />
+The Network Operator can be installed after NFD and works in conjunction with the GPU Operator. It is required to enable features like GPUDirect RDMA.
+
+NVIDIA GPU Operator<br />
+The GPU Operator is the final component in the sequence, using the labels created by NFD to deploy the necessary software components (drivers, device plugins, etc.) to the correct nodes. 
+Note on NFD deployment: Both the NVIDIA GPU Operator and the NVIDIA Network Operator can optionally deploy their own instances of NFD by default. If you are deploying all three operators, it is a best practice to install the standalone NFD operator first and then disable NFD deployment within the configuration of the other two operators to avoid conflicts. 

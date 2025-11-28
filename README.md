@@ -762,14 +762,26 @@ update browser with root ca
 ###Nvidia Installation<br />
 https://docs.nvidia.com/datacenter/cloud-native/openshift/25.10/install-nfd.html
 
-The correct deployment order for the NFD, NVIDIA Network Operator, and NVIDIA GPU Operator in OpenShift is as follows, based on their prerequisites and dependencies:
+For OpenShift 4.19, the correct installation order for the operators to enable high-speed networking with GPUDirect RDMA is based on their dependencies:
 
-Node Feature Discovery (NFD) Operator<br />
-The NFD operator is a prerequisite for both the NVIDIA GPU Operator and the NVIDIA Network Operator because it is responsible for detecting hardware features (like the presence of GPUs and specific NICs) and labeling the nodes accordingly.
+- Node Feature Discovery (NFD) Operator
+- SR-IOV Network Operator (ensure SR-iov is enabled in bios/uefi)
+- NVIDIA Network Operator
+- NVIDIA GPU Operator 
 
-NVIDIA Network Operator (if required for high-speed networking/GPUDirect RDMA)<br />
-The Network Operator can be installed after NFD and works in conjunction with the GPU Operator. It is required to enable features like GPUDirect RDMA.
+Step-by-Step Installation Order<br />
+Here is the recommended sequence for installing and configuring the operators:<br />
 
-NVIDIA GPU Operator<br />
-The GPU Operator is the final component in the sequence, using the labels created by NFD to deploy the necessary software components (drivers, device plugins, etc.) to the correct nodes. 
-Note on NFD deployment: Both the NVIDIA GPU Operator and the NVIDIA Network Operator can optionally deploy their own instances of NFD by default. If you are deploying all three operators, it is a best practice to install the standalone NFD operator first and then disable NFD deployment within the configuration of the other two operators to avoid conflicts. 
+1. Install Node Feature Discovery (NFD) Operator <br />
+NFD is a prerequisite for both the SR-IOV Operator and the NVIDIA GPU Operator. It automatically labels nodes with hardware capabilities (like the presence of GPUs or SR-IOV-capable NICs), which the other operators use for targeting the correct nodes.
+
+3. Install SR-IOV Network Operator 
+This operator is responsible for discovering, configuring, and provisioning the SR-IOV Virtual Functions (VFs) on your network adapters. It creates the necessary CNI plugins and device plugins for SR-IOV networking to function.
+
+5. Install NVIDIA Network Operator 
+The NVIDIA Network Operator works in conjunction with the GPU Operator to enable RDMA and GPUDirect RDMA capabilities. It handles the installation of required drivers (like Mellanox OFED) and configures the RDMA device plugin. It relies on the NFD labels to identify <br />relevant nodes and can work with the SR-IOV operator to expose RDMA-capable VFs to pods.
+
+7. Install NVIDIA GPU Operator 
+The GPU Operator manages the deployment of all necessary NVIDIA software components, including the GPU drivers, CUDA libraries, device plugins, and monitoring tools. It requires NFD to identify the GPU nodes and interacts with the Network Operator's components to<br /> enable GPUDirect RDMA functionality once all prerequisites are met. <br />
+
+Following this order ensures that each operator's dependencies are met before its configuration begins. For detailed installation guides, refer to the official Red Hat documentation and NVIDIA documentation hub. 

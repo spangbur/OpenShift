@@ -584,6 +584,254 @@ platform:
 pullSecret: 'your pull secret here'
 sshKey: 'your ssh public key here'
 ```
+## Ubuntu Desktop Live CD
+
+From the lights-out controller on each Master and Worker node, mount and boot into ubuntu-22.04.5-desktop-amd64.iso. We will run the from memory rather than install onto the physical hard drives. With the OS loaded we can gather the MAC addresses, interface names, and device id's need for the OpenShift installation
+
+Open a console window on each server install ssh and set default passwd
+
+```bash
+
+sudo apt install ssh-server -y; sudo passwd ubuntu
+
+```
+
+```bash
+
+ip addr
+
+```
+
+Establish ssh session to each server and run the following commands to identify spare disks that can be utilized for ephemeral storage
+
+```bash
+
+lsblk
+
+```
+
+Identify spare disks serial numbers which will be used in butain file
+
+```bash
+
+ls -l /dev/disk/by-id/
+
+#udevadm info --query=all --name=/dev/sda | grep ID_SERIAL
+
+```
+
+Appropriately update the Agent-config.yaml with the interface names and MAC addresses previously captured
+
+# Create Butane files
+
+## 99-master-m0-storage.bu Example
+```bash
+
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 99-master-m0-storage
+  labels:
+    disk-id.config.openshift.io/node: "master-0" 
+spec:
+  storage:
+    disks:
+      - device: /dev/disk/by-id/scsi-36000c29ce37fc8976d72627a383ddbad # M0 Disk B
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: m0-part-a
+      - device: /dev/disk/by-id/scsi-36000c291f1b56a43650cadde3ed4fa2d # M0 Disk C
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: m0-part-b
+      - device: /dev/disk/by-id/scsi-36000c2966e4c39349e0fd708f76a2078 # M0 Disk D
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: m0-part-c
+    lvm:
+      volume_groups:
+        - name: vg_containers
+          physical_volumes:
+            - device: /dev/disk/by-partlabel/m0-part-b
+            - device: /dev/disk/by-partlabel/m0-part-c
+            - device: /dev/disk/by-partlabel/m0-part-d
+    filesystems:
+      - device: /dev/vg_containers/lv_containers
+        format: xfs
+        label: var-lib-containers-fs
+        path: /var/lib/containers
+
+```
+
+## 99-master-m1-storage.bu Example
+```bash
+
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 99-master-m1-storage
+  labels:
+    disk-id.config.openshift.io/node: "master-1"
+spec:
+  storage:
+    disks:
+      - device: /dev/disk/by-id/scsi-36000c299afe7a10ead3bdc79d5ae6dd7 # M1 Disk B
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: m1-part-b
+      - device: /dev/disk/by-id/scsi-36000c298a935dad2682d048d2c03be5b # M1 Disk C
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: m1-part-c
+      - device: /dev/disk/by-id/scsi-36000c29eaacf3f4a8dd824dfc575a6cc # M1 Disk D
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: m1-part-d
+    lvm:
+      volume_groups:
+        - name: vg_containers
+          physical_volumes:
+            - device: /dev/disk/by-partlabel/m1-part-b
+            - device: /dev/disk/by-partlabel/m1-part-c
+            - device: /dev/disk/by-partlabel/m1-part-d
+    filesystems:
+      - device: /dev/vg_containers/lv_containers
+        format: xfs
+        label: var-lib-containers-fs
+        path: /var/lib/containers
+```
+
+## 99-master-m2-storage.bu Example
+```bash
+
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 99-master-m2-storage
+  labels:
+    disk-id.config.openshift.io/node: "master-2"
+spec:
+  storage:
+    disks:
+      - device: /dev/disk/by-id/scsi-36000c29dea9aa723758e52cb67278323 # M2 Disk B
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: m2-part-b
+      - device: /dev/disk/by-id/scsi-36000c29685797b104803d57aa4e9a57a # M2 Disk C
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: m2-part-c
+      - device: /dev/disk/by-id/scsi-36000c297cbb616ac3e43c81baffeca5c # M2 Disk D
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: m2-part-d
+    lvm:
+      volume_groups:
+        - name: vg_containers
+          physical_volumes:
+            - device: /dev/disk/by-partlabel/m2-part-b
+            - device: /dev/disk/by-partlabel/m2-part-c
+            - device: /dev/disk/by-partlabel/m2-part-d
+    filesystems:
+      - device: /dev/vg_containers/lv_containers
+        format: xfs
+        label: var-lib-containers-fs
+        path: /var/lib/containers
+
+```
+
+## 99-master-w0-storage.bu Example
+```bash
+
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 99-master-w0-storage
+  labels:
+    disk-id.config.openshift.io/node: "worker-0"
+spec:
+  storage:
+    disks:
+      - device: /dev/disk/by-id/scsi-36000c2958133c174d4c7ce860cab88e6 # M0 Disk B
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: w0-part-b
+      - device: /dev/disk/by-id/scsi-36000c29ed20a76dde45ac1225955e93a # M0 Disk D
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: w0-part-d
+      - device: /dev/disk/by-id/scsi-36000c299f5325d0498f5cee1215fbff5 # M0 Disk E
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: w0-part-e
+    lvm:
+      volume_groups:
+        - name: vg_containers
+          physical_volumes:
+            - device: /dev/disk/by-partlabel/w0-part-b
+            - device: /dev/disk/by-partlabel/w0-part-d
+            - device: /dev/disk/by-partlabel/w0-part-e
+    filesystems:
+      - device: /dev/vg_containers/lv_containers
+        format: xfs
+        label: var-lib-containers-fs
+        path: /var/lib/containers
+
+```
+
+## 99-master-w1-storage.bu Example
+```bash
+
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 99-master-w1-storage
+  labels:
+    disk-id.config.openshift.io/node: "worker-1"
+spec:
+  storage:
+    disks:
+      - device: /dev/disk/by-id/scsi-36000c2971578f38430f668e884f81063 # M0 Disk C
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: w1-part-c
+      - device: /dev/disk/by-id/scsi-36000c29db706620f8cd00fca7da0cd0e # M0 Disk D
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: w1-part-d
+      - device: /dev/disk/by-id/scsi-36000c29b15e0f0a30cc1437e24afa5f1 # M0 Disk E
+        wipe_table: true
+        partitions:
+          - number: 1
+            label: w1-part-e
+    lvm:
+      volume_groups:
+        - name: vg_containers
+          physical_volumes:
+            - device: /dev/disk/by-partlabel/w1-part-c
+            - device: /dev/disk/by-partlabel/w1-part-d
+            - device: /dev/disk/by-partlabel/w1-part-e
+    filesystems:
+      - device: /dev/vg_containers/lv_containers
+        format: xfs
+        label: var-lib-containers-fs
+        path: /var/lib/containers
+
+```
 
 ## Create Agent ISO
 
@@ -636,6 +884,21 @@ openshift-install --dir=/home/sterling/install agent create image
 
 Take the Agent ISO previously created and mount it to all Control-Plane and Worker nodes via iLO, iDRAC or whatever process is used. Ensure that the boot order is set to boot from virtual cd/dvd first and power-on all servers.<br />
 As the servers boot they will identify which server holds the rendezvous IP and begin registering with it.<br />
+
+***CAUTION***<br />
+Monitor the installation progress. The nodes will boot up and register themselves with the cluster API.
+Once the nodes appear in the cluster as "Ready" or "NotReady" (before they are fully configured), use oc commands to apply the unique labels that match your MachineConfig selectors.
+
+## Apply labels to match the MachineConfigs
+```bash
+
+oc label node <master-0-node-name> disk-id.config.openshift.io/node="master-0"
+oc label node <master-1-node-name> disk-id.config.openshift.io/node="master-1"
+oc label node <master-2-node-name> disk-id.config.openshift.io/node="master-2"
+oc label node <master-2-node-name> disk-id.config.openshift.io/node="worker-0"
+oc label node <master-2-node-name> disk-id.config.openshift.io/node="mworker-1"
+
+```
 
 ## Monitor OpenShift Installtion<br />
 

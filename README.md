@@ -627,209 +627,199 @@ Appropriately update the Agent-config.yaml with the interface names and MAC addr
 ## 99-master-m0-storage.bu Example
 ```bash
 
-apiVersion: machineconfiguration.openshift.io/v1
-kind: MachineConfig
+variant: openshift
+version: 4.19.0
 metadata:
-  name: 99-master-m0-storage
+  name: 99-master-m0
   labels:
-    disk-id.config.openshift.io/node: "master-0" 
-spec:
-  storage:
-    disks:
-      - device: /dev/disk/by-id/scsi-36000c29ce37fc8976d72627a383ddbad # M0 Disk B
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: m0-part-a
-      - device: /dev/disk/by-id/scsi-36000c291f1b56a43650cadde3ed4fa2d # M0 Disk C
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: m0-part-b
-      - device: /dev/disk/by-id/scsi-36000c2966e4c39349e0fd708f76a2078 # M0 Disk D
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: m0-part-c
-    lvm:
-      volume_groups:
-        - name: vg_containers
-          physical_volumes:
-            - device: /dev/disk/by-partlabel/m0-part-b
-            - device: /dev/disk/by-partlabel/m0-part-c
-            - device: /dev/disk/by-partlabel/m0-part-d
-    filesystems:
-      - device: /dev/vg_containers/lv_containers
-        format: xfs
-        label: var-lib-containers-fs
-        path: /var/lib/containers
+    machineconfiguration.openshift.io/role: master
+    # Add a specific label for this node
+    specific-node: controller-01
+storage:
+  # ... (filesystems definition remains the same)
+  filesystems:
+    - path: /var/lib/containers
+      device: /dev/mapper/vg_containers-lv_containers
+      format: xfs
+      label: var-lib-cont
+      wipe_filesystem: true
+systemd:
+  units:
+    - name: setup-containers-lvm.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Set up LVM for /var/lib/containers (master-0)
+        Before=crio.service kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        # Use the specific IDs for master-0
+        ExecStart=/usr/sbin/pvcreate /dev/disk/by-id/scsi-36000c296c4cf076c02aa4b27c9af3448 /dev/disk/by-id/scsi-36000c29d513627950d35e5ed6b1487d1 /dev/disk/by-id/scsi-36000c2904e28e740c426ee7860aec6aa
+        ExecStart=/usr/sbin/vgcreate vg_containers /dev/disk/by-id/scsi-36000c296c4cf076c02aa4b27c9af3448 /dev/disk/by-id/scsi-36000c29d513627950d35e5ed6b1487d1 /dev/disk/by-id/scsi-36000c2904e28e740c426ee7860aec6aa
+        ExecStart=/usr/sbin/lvcreate -l 100%FREE -n lv_containers vg_containers
+        ExecStart=/usr/sbin/mkfs.xfs /dev/mapper/vg_containers-lv_containers
+        [Install]
+        WantedBy=multi-user.target
 
 ```
 
 ## 99-master-m1-storage.bu Example
 ```bash
 
-apiVersion: machineconfiguration.openshift.io/v1
-kind: MachineConfig
+variant: openshift
+version: 4.19.0
 metadata:
-  name: 99-master-m1-storage
+  name: 99-master-m1
   labels:
-    disk-id.config.openshift.io/node: "master-1"
-spec:
-  storage:
-    disks:
-      - device: /dev/disk/by-id/scsi-36000c299afe7a10ead3bdc79d5ae6dd7 # M1 Disk B
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: m1-part-b
-      - device: /dev/disk/by-id/scsi-36000c298a935dad2682d048d2c03be5b # M1 Disk C
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: m1-part-c
-      - device: /dev/disk/by-id/scsi-36000c29eaacf3f4a8dd824dfc575a6cc # M1 Disk D
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: m1-part-d
-    lvm:
-      volume_groups:
-        - name: vg_containers
-          physical_volumes:
-            - device: /dev/disk/by-partlabel/m1-part-b
-            - device: /dev/disk/by-partlabel/m1-part-c
-            - device: /dev/disk/by-partlabel/m1-part-d
-    filesystems:
-      - device: /dev/vg_containers/lv_containers
-        format: xfs
-        label: var-lib-containers-fs
-        path: /var/lib/containers
+    machineconfiguration.openshift.io/role: master
+    # Add a specific label for this node
+    specific-node: controller-02
+storage:
+  # ... (filesystems definition remains the same)
+  filesystems:
+    - path: /var/lib/containers
+      device: /dev/mapper/vg_containers-lv_containers
+      format: xfs
+      label: var-lib-cont
+      wipe_filesystem: true
+systemd:
+  units:
+    - name: setup-lvm.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Set up LVM for /var/lib/containers (master-0)
+        Before=crio.service kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        # Use the specific IDs for master-m1
+        ExecStart=/usr/sbin/pvcreate /dev/disk/by-id/scsi-36000c294def6476b58dfe1ab54b4b1de /dev/disk/by-id/scsi-36000c2980acad421860c1eec67118024 /dev/disk/by-id/scsi-36000c29366f6507bb3d765c496caf368
+        ExecStart=/usr/sbin/vgcreate vg_containers /dev/disk/by-id/scsi-36000c294def6476b58dfe1ab54b4b1de /dev/disk/by-id/scsi-36000c2980acad421860c1eec67118024 /dev/disk/by-id/scsi-36000c29366f6507bb3d765c496caf368
+        ExecStart=/usr/sbin/lvcreate -l 100%FREE -n lv_containers vg_containers
+        ExecStart=/usr/sbin/mkfs.xfs /dev/mapper/vg_containers-lv_containers
+        [Install]
+        WantedBy=multi-user.target
 ```
 
 ## 99-master-m2-storage.bu Example
 ```bash
 
-apiVersion: machineconfiguration.openshift.io/v1
-kind: MachineConfig
+variant: openshift
+version: 4.19.0
 metadata:
-  name: 99-master-m2-storage
+  name: 99-master-m2
   labels:
-    disk-id.config.openshift.io/node: "master-2"
-spec:
-  storage:
-    disks:
-      - device: /dev/disk/by-id/scsi-36000c29dea9aa723758e52cb67278323 # M2 Disk B
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: m2-part-b
-      - device: /dev/disk/by-id/scsi-36000c29685797b104803d57aa4e9a57a # M2 Disk C
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: m2-part-c
-      - device: /dev/disk/by-id/scsi-36000c297cbb616ac3e43c81baffeca5c # M2 Disk D
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: m2-part-d
-    lvm:
-      volume_groups:
-        - name: vg_containers
-          physical_volumes:
-            - device: /dev/disk/by-partlabel/m2-part-b
-            - device: /dev/disk/by-partlabel/m2-part-c
-            - device: /dev/disk/by-partlabel/m2-part-d
-    filesystems:
-      - device: /dev/vg_containers/lv_containers
-        format: xfs
-        label: var-lib-containers-fs
-        path: /var/lib/containers
+    machineconfiguration.openshift.io/role: master
+    # Add a specific label for this node
+    specific-node: controller-03
+storage:
+  # ... (filesystems definition remains the same)
+  filesystems:
+    - path: /var/lib/containers
+      device: /dev/mapper/vg_containers-lv_containers
+      format: xfs
+      label: var-lib-cont
+      wipe_filesystem: true
+systemd:
+  units:
+    - name: setup-lvm.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Set up LVM for /var/lib/containers (master-0)
+        Before=crio.service kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        # Use the specific IDs for master-m2
+        ExecStart=/usr/sbin/pvcreate /dev/disk/by-id/scsi-36000c294def6476b58dfe1ab54b4b1de /dev/disk/by-id/scsi-36000c2901de05db73a89bb7bf6d7998d /dev/disk/by-id/scsi-36000c29203ef255d524beace20bbbd15
+        ExecStart=/usr/sbin/vgcreate vg_containers /dev/disk/by-id/scsi-36000c294def6476b58dfe1ab54b4b1de /dev/disk/by-id/scsi-36000c2901de05db73a89bb7bf6d7998d /dev/disk/by-id/scsi-36000c29203ef255d524beace20bbbd15
+        ExecStart=/usr/sbin/lvcreate -l 100%FREE -n lv_containers vg_containers
+        ExecStart=/usr/sbin/mkfs.xfs /dev/mapper/vg_containers-lv_containers
+        [Install]
+        WantedBy=multi-user.target
 
 ```
 
 ## 99-master-w0-storage.bu Example
 ```bash
 
-apiVersion: machineconfiguration.openshift.io/v1
-kind: MachineConfig
+variant: openshift
+version: 4.19.0
 metadata:
-  name: 99-master-w0-storage
+  name: 99-worker-w0
   labels:
-    disk-id.config.openshift.io/node: "worker-0"
-spec:
-  storage:
-    disks:
-      - device: /dev/disk/by-id/scsi-36000c2958133c174d4c7ce860cab88e6 # M0 Disk B
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: w0-part-b
-      - device: /dev/disk/by-id/scsi-36000c29ed20a76dde45ac1225955e93a # M0 Disk D
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: w0-part-d
-      - device: /dev/disk/by-id/scsi-36000c299f5325d0498f5cee1215fbff5 # M0 Disk E
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: w0-part-e
-    lvm:
-      volume_groups:
-        - name: vg_containers
-          physical_volumes:
-            - device: /dev/disk/by-partlabel/w0-part-b
-            - device: /dev/disk/by-partlabel/w0-part-d
-            - device: /dev/disk/by-partlabel/w0-part-e
-    filesystems:
-      - device: /dev/vg_containers/lv_containers
-        format: xfs
-        label: var-lib-containers-fs
-        path: /var/lib/containers
+    machineconfiguration.openshift.io/role: master
+    # Add a specific label for this node
+    specific-node: work-01
+storage:
+  # ... (filesystems definition remains the same)
+  filesystems:
+    - path: /var/lib/containers
+      device: /dev/mapper/vg_containers-lv_containers
+      format: xfs
+      label: var-lib-cont
+      wipe_filesystem: true
+systemd:
+  units:
+    - name: setup-lvm.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Set up LVM for /var/lib/containers (master-0)
+        Before=crio.service kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        # Use the specific IDs for worker-w0
+        ExecStart=/usr/sbin/pvcreate /dev/disk/by-id/scsi-36000c291dc9f1add19674637b4a94bd9 /dev/disk/by-id/scsi-36000c295737ab115dcf88a3668e6d923 /dev/disk/by-id/scsi-36000c29a39e3ce29114ba833a54d1190
+        ExecStart=/usr/sbin/vgcreate vg_containers /dev/disk/by-id/scsi-36000c291dc9f1add19674637b4a94bd9 /dev/disk/by-id/scsi-36000c295737ab115dcf88a3668e6d923 /dev/disk/by-id/scsi-36000c29a39e3ce29114ba833a54d1190
+        ExecStart=/usr/sbin/lvcreate -l 100%FREE -n lv_containers vg_containers
+        ExecStart=/usr/sbin/mkfs.xfs /dev/mapper/vg_containers-lv_containers
+        [Install]
+        WantedBy=multi-user.target
 
 ```
 
 ## 99-master-w1-storage.bu Example
 ```bash
 
-apiVersion: machineconfiguration.openshift.io/v1
-kind: MachineConfig
+variant: openshift
+version: 4.19.0
 metadata:
-  name: 99-master-w1-storage
+  name: 99-worker-w1
   labels:
-    disk-id.config.openshift.io/node: "worker-1"
-spec:
-  storage:
-    disks:
-      - device: /dev/disk/by-id/scsi-36000c2971578f38430f668e884f81063 # M0 Disk C
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: w1-part-c
-      - device: /dev/disk/by-id/scsi-36000c29db706620f8cd00fca7da0cd0e # M0 Disk D
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: w1-part-d
-      - device: /dev/disk/by-id/scsi-36000c29b15e0f0a30cc1437e24afa5f1 # M0 Disk E
-        wipe_table: true
-        partitions:
-          - number: 1
-            label: w1-part-e
-    lvm:
-      volume_groups:
-        - name: vg_containers
-          physical_volumes:
-            - device: /dev/disk/by-partlabel/w1-part-c
-            - device: /dev/disk/by-partlabel/w1-part-d
-            - device: /dev/disk/by-partlabel/w1-part-e
-    filesystems:
-      - device: /dev/vg_containers/lv_containers
-        format: xfs
-        label: var-lib-containers-fs
-        path: /var/lib/containers
+    machineconfiguration.openshift.io/role: master
+    # Add a specific label for this node
+    specific-node: work-02
+storage:
+  # ... (filesystems definition remains the same)
+  filesystems:
+    - path: /var/lib/containers
+      device: /dev/mapper/vg_containers-lv_containers
+      format: xfs
+      label: var-lib-cont
+      wipe_filesystem: true
+systemd:
+  units:
+    - name: setup-lvm.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Set up LVM for /var/lib/containers (master-0)
+        Before=crio.service kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        # Use the specific IDs for worker-w1
+        ExecStart=/usr/sbin/pvcreate /dev/disk/by-id/scsi-36000c295abdb746293cf8e7c5562e978 /dev/disk/by-id/scsi-36000c291e6e5fb6f64f8036b13b4a11f /dev/disk/by-id/scsi-36000c293050e4b5f9708190585238465
+        ExecStart=/usr/sbin/vgcreate vg_containers /dev/disk/by-id/scsi-36000c295abdb746293cf8e7c5562e978 /dev/disk/by-id/scsi-36000c291e6e5fb6f64f8036b13b4a11f /dev/disk/by-id/scsi-36000c293050e4b5f9708190585238465
+        ExecStart=/usr/sbin/lvcreate -l 100%FREE -n lv_containers vg_containers
+        ExecStart=/usr/sbin/mkfs.xfs /dev/mapper/vg_containers-lv_containers
+        [Install]
+        WantedBy=multi-user.target
 
 ```
 

@@ -614,15 +614,61 @@ Identify spare disks serial numbers which will be used in butain file
 
 ```bash
 
-ls -l /dev/disk/by-id/
+#ls -l /dev/disk/by-id/
 
-#udevadm info --query=all --name=/dev/sda | grep ID_SERIAL
+##udevadm info --query=all --name=/dev/sda | grep ID_SERIAL
+
+sudo pvcreate /dev/sdb
+sudo pvcreate /dev/sdc
+sudo pvcreate /dev/sdd
+
+
+sudo vgcreate vg-ephemeral /dev/sdb
+sudo vgextend vg-ephemeral /dev/sdc /dev/sdd
+
+sudo lvcreate -l 100%FREE -n ephemeral-storage vg-ephemeral
+
+sudo mkfs.xfs /dev/vg-ephemeral/ephemeral-storage
 
 ```
 
 Appropriately update the Agent-config.yaml with the interface names and MAC addresses previously captured
 
 # Create Butane files
+
+```bash
+
+# 99-container-storage.bu
+variant: openshift
+version: 4.19.0
+metadata:
+  name: 99-container-storage
+  labels:
+    machineconfiguration.openshift.io/role: worker # Apply to worker nodes, or master if desired
+    # To apply to all nodes, create a similar config for master role
+storage:
+  # Optional: Define disks if they need specific partitioning or formatting
+  # If disks are already part of a pre-created LVM setup externally, 
+  # you might only need the filesystems definition, assuming the LVM is detected.
+
+  # Define the filesystem mount
+  filesystems:
+    - path: /var/lib/containers
+      device: /dev/mapper/<YOUR_VG_NAME>-<YOUR_LV_NAME> # e.g., /dev/mapper/vg_containers-lv_containers
+      format: xfs # Or ext4, as desired
+      with_mount_unit: true
+      # The agent installer should automatically handle mounting if specified this way.
+
+```
+
+Transpile the Butane config to MachineConfig
+
+```bash
+
+butane --pretty --strict 99-container-storage.bu -o 99-container-storage.yaml
+
+```
+
 
 ## 99-master-m0-storage.bu Example
 ```bash

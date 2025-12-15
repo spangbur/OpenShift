@@ -628,7 +628,9 @@ sudo vgextend vg-ephemeral /dev/sdc /dev/sdd
 
 sudo lvcreate -l 100%FREE -n ephemeral-storage vg-ephemeral
 
-sudo mkfs.xfs /dev/vg-ephemeral/ephemeral-storage
+#sudo mkfs.xfs /dev/vg-ephemeral/ephemeral-storage   the BU should laydown the file system
+
+# to clean drives do this     if=/dev/urandom of=/dev/sda bs=10M
 
 ```
 

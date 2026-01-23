@@ -942,8 +942,9 @@ oc label node <master-2-node-name> disk-id.config.openshift.io/node="mworker-1"
 
 Run the first command below below while in the /home/sterling/install directory to monitor the bootstrap process. Once the bootstrap completes you can run the second command to monitor the API availability.
 ```bash
-openshift-install wait-for bootstrap-complete
-openshift-install wait-for install-complete
+openshift-install --dir <install_directory> agent wait-for bootstrap-complete
+openshift-install --dir <install_directory> agent wait-for install-complete
+
 ```
 ## OpenShift Installation Complete
 
